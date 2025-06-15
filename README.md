@@ -75,3 +75,40 @@ classDiagram
     WeatherData o-- Observer : maintains
     CurrentConditionsDisplay o-- WeatherData : observes
 ```
+
+### Chapter 3. Decorator Pattern
+
+```mermaid
+classDiagram
+    class Beverage {
+        <<abstract>>
+        +getDescription()
+        +cost()
+        +setSize(size)
+        +getSize()
+        -description
+        -size
+        enum Size
+    }
+    class Espresso
+    class HouseBlend
+    Beverage <|-- Espresso
+    Beverage <|-- HouseBlend
+
+    class CondimentDecorator {
+        <<abstract>>
+        +getDescription()
+        +cost()
+        -beverage
+    }
+    CondimentDecorator <|-- Mocha
+    CondimentDecorator <|-- Soy
+    CondimentDecorator <|-- Whip
+
+    class Mocha
+    class Soy
+    class Whip
+
+    Beverage <|-- CondimentDecorator
+    CondimentDecorator o-- Beverage : wraps
+```
