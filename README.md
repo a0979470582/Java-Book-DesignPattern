@@ -112,3 +112,71 @@ classDiagram
     Beverage <|-- CondimentDecorator
     CondimentDecorator o-- Beverage : wraps
 ```
+
+### Chapter 4. Factory Pattern
+
+```mermaid
+classDiagram
+    %% Factory Method Pattern
+    class PizzaStore {
+        <<abstract>>
+        +orderPizza(String type) Pizza
+        +createPizza(String type)* Pizza
+    }
+    class NYPizzaStore {
+        +createPizza(String type) Pizza
+    }
+    class ChicagoStore {
+        +createPizza(String type) Pizza
+    }
+    PizzaStore <|-- NYPizzaStore
+    PizzaStore <|-- ChicagoStore
+
+    %% Abstract Factory Pattern
+    class IngredientFactory {
+        <<interface>>
+        +createDough() String
+        +createSauce() String
+        +createToppings() String
+    }
+    class NYIngredientFactory {
+        +createDough() String
+        +createSauce() String
+        +createToppings() String
+    }
+    class ChicagoIngredientFactory {
+        +createDough() String
+        +createSauce() String
+        +createToppings() String
+    }
+    IngredientFactory <|.. NYIngredientFactory
+    IngredientFactory <|.. ChicagoIngredientFactory
+
+    %% Product
+    class Pizza {
+        <<abstract>>
+        -String name
+        -String dough
+        -String sauce
+        -List~String~ toppings
+        +prepare() void
+        +bake() void
+        +cut() void
+        +box() void
+        +getName() String
+    }
+    class CheesePizza {
+        -IngredientFactory ingredientFactory
+        +CheesePizza(IngredientFactory, String)
+        +prepare() void
+    }
+    Pizza <|-- CheesePizza
+
+    %% Relations
+    PizzaStore ..> Pizza : creates
+    NYPizzaStore ..> CheesePizza : creates
+    ChicagoStore ..> CheesePizza : creates
+    NYPizzaStore ..> NYIngredientFactory : uses
+    ChicagoStore ..> ChicagoIngredientFactory : uses
+    CheesePizza ..> IngredientFactory : depends
+```
