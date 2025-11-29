@@ -180,3 +180,42 @@ classDiagram
     ChicagoStore ..> ChicagoIngredientFactory : uses
     CheesePizza ..> IngredientFactory : depends
 ```
+
+### Chapter 5. Singleton Pattern
+
+```mermaid
+classDiagram
+    class SingletonNotThreadSafe {
+        -static instance : SingletonNotThreadSafe
+        -SingletonNotThreadSafe()
+        +getInstance() SingletonNotThreadSafe
+        +clearInstance() void
+    }
+```
+
+```mermaid
+classDiagram
+    class SingletonThreadSafe {
+        -static instance : SingletonThreadSafe
+        -SingletonThreadSafe()
+        +getInstance() SingletonThreadSafe
+        +clearInstance() void
+    }
+```
+
+```mermaid
+classDiagram
+    class SingletonPrivateLoader {
+        -SingletonPrivateLoader()
+        +getInstance() SingletonPrivateLoader
+        %% Holder~ is loaded lazily by JVM
+    }
+```
+
+```mermaid
+classDiagram
+    class SingletonByEnum {
+        <<enum>>
+        SINGLETON
+    }
+```
