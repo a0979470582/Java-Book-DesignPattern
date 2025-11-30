@@ -9,19 +9,9 @@ public class SingletonNotThreadSafe {
 
     public static SingletonNotThreadSafe getInstance() {
         if (instance == null) {
-            // Simulate some delay to increase the chance of race condition
-            delay(1000);
             instance = new SingletonNotThreadSafe();
         }
         return instance;
-    }
-
-    private static void delay(long millis) {
-        try {
-            Thread.sleep(millis);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     public static void clearInstance() {
