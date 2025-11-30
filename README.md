@@ -219,3 +219,75 @@ classDiagram
         SINGLETON
     }
 ```
+
+### Chapter 6. Command Pattern
+
+```mermaid
+classDiagram
+    %% Command Interface
+    class Command {
+        <<interface>>
+        +execute()
+        +undo()
+    }
+
+    %% Concrete Commands
+    class LightOnCommand
+    class LightOffCommand
+    class StereoOnWithCDCommand
+    class StereoOffWithCDCommand
+    class MacroCommand {
+        -Command[] commands
+        +execute()
+        +undo()
+    }
+    class NoCommand
+
+    Command <|.. LightOnCommand
+    Command <|.. LightOffCommand
+    Command <|.. StereoOnWithCDCommand
+    Command <|.. StereoOffWithCDCommand
+    Command <|.. MacroCommand
+    Command <|.. NoCommand
+
+    %% Invokers
+    class RemoteControl {
+        -Command[] onCommands
+        -Command[] offCommands
+        -Command lastCommand
+        +setCommand(int, Command, Command)
+        +onButtonWasPressed(int)
+        +offButtonWasPressed(int)
+        +undoButtonWasPressed()
+    }
+    class SimpleRemoteControl {
+        -Command slot
+        +setCommand(Command)
+        +onPressed()
+    }
+    RemoteControl o-- Command : holds
+    SimpleRemoteControl o-- Command : slot
+
+    %% Receivers
+    class Light {
+        +on()
+        +off()
+    }
+    class Stereo {
+        -int volume
+        -String cd
+        +on()
+        +off()
+        +setCD(String)
+        +setVolume(int)
+        +getVolume() int
+        +getCD() String
+    }
+
+    LightOnCommand --> Light : receiver
+    LightOffCommand --> Light : receiver
+    StereoOnWithCDCommand --> Stereo : receiver
+    StereoOffWithCDCommand --> Stereo : receiver
+    MacroCommand o-- Command : macro
+```
+
