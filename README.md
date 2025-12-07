@@ -291,3 +291,128 @@ classDiagram
     MacroCommand o-- Command : macro
 ```
 
+
+### Chapter 7. Adapter Pattern
+
+#### TurkeyToDuckAdapter
+
+```mermaid
+classDiagram
+    class Duck {
+        <<interface>>
+        +quack()
+        +fly()
+    }
+    
+    class Turkey {
+        <<interface>>
+        +gobble()
+        +fly()
+    }
+    
+    class TurkeyToDuckAdapter {
+        -Turkey turkey
+        +TurkeyToDuckAdapter(Turkey)
+        +quack()
+        +fly()
+    }
+    
+    class MallardDuck {
+        +quack()
+        +fly()
+    }
+    
+    class WildTurkey {
+        +gobble()
+        +fly()
+    }
+    
+    Duck <|.. TurkeyToDuckAdapter
+    Duck <|.. MallardDuck
+    Turkey <|.. WildTurkey
+    TurkeyToDuckAdapter --> Turkey : adapts
+```
+
+#### EnumerationIterator
+
+```mermaid
+classDiagram
+    class Iterator {
+        <<interface>>
+        +hasNext() bool
+        +next() Object
+        +remove()
+    }
+    
+    class Enumeration {
+        <<interface>>
+        +hasMoreElements() bool
+        +nextElement() Object
+    }
+    
+    class EnumerationIterator {
+        -Enumeration enumeration
+        +EnumerationIterator(Enumeration)
+        +hasNext() bool
+        +next() Object
+        +remove()
+    }
+    
+    Iterator <|.. EnumerationIterator
+    EnumerationIterator --> Enumeration : wraps
+```
+
+#### HomeTheaterFacade
+
+```mermaid
+classDiagram
+    class HomeTheaterFacade {
+        -Amplifier amplifier
+        -Tuner tuner
+        -DvdPlayer dvdPlayer
+        -CdPlayer cdPlayer
+        -Projector projector
+        -TheaterLights theaterLights
+        +watchMovie(String)
+        +endMovie()
+    }
+    
+    class Amplifier {
+        +on()
+        +off()
+        +setDvd(DvdPlayer)
+        +setSurroundSound()
+        +setVolume(int)
+    }
+    
+    class Tuner {
+    }
+    
+    class DvdPlayer {
+        +on()
+        +off()
+        +play(String)
+        +stop()
+        +eject()
+    }
+    
+    class CdPlayer {
+    }
+    
+    class Projector {
+        +on()
+        +off()
+    }
+    
+    class TheaterLights {
+        +on()
+        +dim(int)
+    }
+    
+    HomeTheaterFacade --> Amplifier
+    HomeTheaterFacade --> Tuner
+    HomeTheaterFacade --> DvdPlayer
+    HomeTheaterFacade --> CdPlayer
+    HomeTheaterFacade --> Projector
+    HomeTheaterFacade --> TheaterLights
+```
