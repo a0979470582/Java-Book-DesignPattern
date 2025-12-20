@@ -416,3 +416,43 @@ classDiagram
     HomeTheaterFacade --> Projector
     HomeTheaterFacade --> TheaterLights
 ```
+
+### Chapter 8. Template Method Pattern
+
+```mermaid
+classDiagram
+    class CaffeineBeverage {
+        +prepareRecipe()
+        +boilWater()
+        +pourInCup()
+        +addCondiments()
+    }
+    class Tea {
+        +addCondiments()
+        +brew()
+    }
+    class Coffee {
+        +addCondiments()
+        +brew()
+    }
+    CaffeineBeverage <|-- Tea : extends
+    CaffeineBeverage <|-- Coffee : extends
+```
+
+```mermaid
+classDiagram
+    class MyFrame {
+        +paint(Graphics graphics)
+    }
+    JFrame <|-- MyFrame : extends
+```
+
+```mermaid
+classDiagram
+    class MyStringList {
+        +size()
+        +get(int index)
+        +subList(int fromIndex, int toIndex)
+    }
+    AbstractList <|-- MyStringList : extends
+```
