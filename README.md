@@ -456,3 +456,108 @@ classDiagram
     }
     AbstractList <|-- MyStringList : extends
 ```
+
+### Chapter 9. Iterator and Composite Pattern
+
+#### Iterator Pattern
+
+```mermaid
+classDiagram
+    class Menu {
+        <<interface>>
+        +createIterator() Iterator
+    }
+    class MenuItem {
+        -name: String
+        -description: String
+        -vegetarian: boolean
+        -price: double
+        +getName() String
+        +getDescription() String
+        +isVegetarian() boolean
+        +getPrice() double
+    }
+    class DinerMenu {
+        -menuItems: MenuItem[]
+        -numberOfItems: int
+        +addItem(name, description, vegetarian, price)
+        +createIterator() Iterator
+    }
+    class PancakeHouseMenu {
+        -menuItems: ArrayList
+        +addItem(name, description, vegetarian, price)
+        +createIterator() Iterator
+    }
+    class CafeMenu {
+        -menuItems: HashMap
+        +addItem(name, description, vegetarian, price)
+        +createIterator() Iterator
+    }
+    class DinerMenuIterator {
+        -items: MenuItem[]
+        -position: int
+        +hasNext() boolean
+        +next() MenuItem
+    }
+    class Waitress {
+        -menus: Menu[]
+        +printMenu()
+    }
+    
+    Menu <|.. DinerMenu
+    Menu <|.. PancakeHouseMenu
+    Menu <|.. CafeMenu
+    DinerMenu --> MenuItem
+    PancakeHouseMenu --> MenuItem
+    CafeMenu --> MenuItem
+    DinerMenu --> DinerMenuIterator
+    Waitress --> Menu
+```
+
+#### Composite Pattern
+
+```mermaid
+classDiagram
+    class MenuComponent {
+        <<abstract>>
+        +add(menuComponent)
+        +remove(menuComponent)
+        +getChild(i) MenuComponent
+        +getName() String
+        +getDescription() String
+        +getPrice() double
+        +isVegetarian() boolean
+        +print()
+    }
+    class MenuItem {
+        -name: String
+        -description: String
+        -vegetarian: boolean
+        -price: double
+        +getName() String
+        +getDescription() String
+        +getPrice() double
+        +isVegetarian() boolean
+        +print()
+    }
+    class Menu {
+        -menuComponents: List~MenuComponent~
+        -name: String
+        -description: String
+        +add(menuComponent)
+        +remove(menuComponent)
+        +getChild(i) MenuComponent
+        +getName() String
+        +getDescription() String
+        +print()
+    }
+    class Waitress {
+        -allMenus: MenuComponent
+        +printVegetarianMenu()
+    }
+    
+    MenuComponent <|-- MenuItem
+    MenuComponent <|-- Menu
+    Menu *-- MenuComponent
+    Waitress --> MenuComponent
+```
