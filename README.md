@@ -561,3 +561,92 @@ classDiagram
     Menu *-- MenuComponent
     Waitress --> MenuComponent
 ```
+
+### Chapter 10. State Pattern
+
+```mermaid
+classDiagram
+    class State {
+        <<interface>>
+        +insertQuarter()
+        +ejectQuarter()
+        +turnCrank()
+        +dispense()
+    }
+
+    class GumballMachine {
+        -soldOutState: State
+        -noQuarterState: State
+        -hasQuarterState: State
+        -soldState: State
+        -winnerState: State
+        -state: State
+        -count: int
+        +insertQuarter()
+        +ejectQuarter()
+        +turnCrank()
+        +setState(state)
+        +releaseBall()
+        +getCount() int
+        +getSoldOutState() State
+        +getNoQuarterState() State
+        +getHasQuarterState() State
+        +getSoldState() State
+        +getWinnerState() State
+    }
+
+    class NoQuarterState {
+        -gumballMachine: GumballMachine
+        +insertQuarter()
+        +ejectQuarter()
+        +turnCrank()
+        +dispense()
+    }
+    class HasQuarterState {
+        -randomWinner: Random
+        -gumballMachine: GumballMachine
+        +insertQuarter()
+        +ejectQuarter()
+        +turnCrank()
+        +dispense()
+    }
+    class SoldState {
+        -gumballMachine: GumballMachine
+        +insertQuarter()
+        +ejectQuarter()
+        +turnCrank()
+        +dispense()
+    }
+    class SoldOutState {
+        -gumballMachine: GumballMachine
+        +insertQuarter()
+        +ejectQuarter()
+        +turnCrank()
+        +dispense()
+    }
+    class WinnerState {
+        -gumballMachine: GumballMachine
+        +insertQuarter()
+        +ejectQuarter()
+        +turnCrank()
+        +dispense()
+    }
+
+    State <|.. NoQuarterState
+    State <|.. HasQuarterState
+    State <|.. SoldState
+    State <|.. SoldOutState
+    State <|.. WinnerState
+
+    GumballMachine o-- NoQuarterState
+    GumballMachine o-- HasQuarterState
+    GumballMachine o-- SoldState
+    GumballMachine o-- SoldOutState
+    GumballMachine o-- WinnerState
+    GumballMachine --> State : uses
+    NoQuarterState --> GumballMachine
+    HasQuarterState --> GumballMachine
+    SoldState --> GumballMachine
+    SoldOutState --> GumballMachine
+    WinnerState --> GumballMachine
+```
